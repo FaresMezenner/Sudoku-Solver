@@ -1,25 +1,25 @@
+import java.util.ArrayList;
+
 public class Cell {
 
-    private boolean solved;
+
     private int value;
-    private int[] possibleValues = new int[9];
-    private int[] impossibleValues = new int[9];
+    private ArrayList<Integer> possibleValues = new ArrayList<>();
+    private ArrayList<Integer> impossibleValues = new ArrayList<>();
 
-    public Cell(boolean solved, int value, int[] possibleValues, int[] impossibleValues) {
-        this.solved = solved;
-        this.value = value;
+    public Cell( int value, ArrayList<Integer> possibleValues) {
+
+        for (int j=1; j<=9; j++){
+            impossibleValues.add(j);
+        }
+
+        setValue(value);
+
+
         this.possibleValues = possibleValues;
-        this.impossibleValues = impossibleValues;
     }
 
 
-    public boolean isSolved() {
-        return solved;
-    }
-
-    public void setSolved(boolean solved) {
-        this.solved = solved;
-    }
 
     public int getValue() {
         return value;
@@ -27,21 +27,32 @@ public class Cell {
 
     public void setValue(int value) {
         this.value = value;
+        if (value == 0){
+            for (int i : possibleValues){
+                impossibleValues.remove((Object)i);
+                if (!this.possibleValues.contains(i)) this.possibleValues.add(i);
+            }
+        } else {
+            impossibleValues.remove((Object)value);
+        }
     }
 
-    public int[] getPossibleValues() {
+    public ArrayList<Integer> getPossibleValues() {
         return possibleValues;
     }
 
-    public void setPossibleValues(int[] possibleValues) {
+    public void setPossibleValues(ArrayList<Integer> possibleValues) {
         this.possibleValues = possibleValues;
     }
 
-    public int[] getImpossibleValues() {
+    public ArrayList<Integer> getImpossibleValues() {
         return impossibleValues;
     }
 
-    public void setImpossibleValues(int[] impossibleValues) {
+    public void setImpossibleValues(ArrayList<Integer> impossibleValues) {
         this.impossibleValues = impossibleValues;
     }
+
+
+
 }
